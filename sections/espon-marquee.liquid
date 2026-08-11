@@ -1,0 +1,167 @@
+{%- style -%}
+  .espon-marquee-section {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    padding: 6px 0;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Make it sticky if the user wants it fixed */
+  {% if section.settings.make_sticky %}
+  .espon-marquee-section {
+    position: sticky;
+    top: 0;
+    width: 100%;
+  }
+  {% endif %}
+
+  .espon-marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: esponMarqueeScroll {{ section.settings.speed }}s linear infinite;
+    /* Hardware acceleration for ultra-smooth rendering */
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .espon-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  .espon-marquee-content {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .espon-marquee-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif; /* Clean modern font like 11fit */
+  }
+
+  .espon-marquee-item svg, .espon-marquee-item i {
+    margin-left: 8px;
+    font-size: 13px;
+    color: {{ section.settings.icon_color }};
+  }
+
+  @keyframes esponMarqueeScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .espon-marquee-item {
+      font-size: 10px; /* Slight scale down for mobile, but fixed */
+      padding: 0 15px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="espon-marquee-section">
+  <div class="espon-marquee-track">
+    <!-- Duplicate sets 4 times for seamless ultra-wide looping -->
+    {%- for i in (1..4) -%}
+      <div class="espon-marquee-content" {% if forloop.index > 1 %}aria-hidden="true"{% endif %}>
+        {%- for block in section.blocks -%}
+          <div class="espon-marquee-item" {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+            {%- if block.settings.icon != blank -%}
+              <i class="{{ block.settings.icon }}"></i>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "11fit Marquee",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#ca8a04"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "label": "Animation Speed",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "make_sticky",
+      "label": "Make Sticky (Fixed at Top)",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "PREMIUM SPORTSWEAR"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon Class (e.g. fas fa-bolt)",
+          "default": "fas fa-bolt"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "11fit Marquee",
+      "blocks": [
+        { "type": "text", "settings": { "text": "FREE SHIPPING ON PREPAID ORDERS", "icon": "fas fa-truck-fast" } },
+        { "type": "text", "settings": { "text": "CASH ON DELIVERY AVAILABLE", "icon": "fas fa-wallet" } },
+        { "type": "text", "settings": { "text": "PREMIUM QUALITY FABRICS", "icon": "fas fa-star" } },
+        { "type": "text", "settings": { "text": "FREE SHIPPING ON PREPAID ORDERS", "icon": "fas fa-truck-fast" } },
+        { "type": "text", "settings": { "text": "CASH ON DELIVERY AVAILABLE", "icon": "fas fa-wallet" } },
+        { "type": "text", "settings": { "text": "PREMIUM QUALITY FABRICS", "icon": "fas fa-star" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

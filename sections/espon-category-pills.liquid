@@ -1,0 +1,107 @@
+{%- style -%}
+.collection-subcategories {
+  background-color: #ffffff;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin: 0;
+}
+.subcategories-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0 1rem;
+  margin: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  .subcategories-list {
+    justify-content: flex-start;
+  }
+}
+.subcategories-list::-webkit-scrollbar {
+  display: none;
+}
+.subcategory-item {
+  flex-shrink: 0;
+}
+.subcategory-link {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  border-radius: 999px;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+  background-color: #ffffff;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+.subcategory-link:hover {
+  background-color: rgba(var(--color-foreground), 0.05);
+}
+.subcategory-link.active {
+  background-color: #c5a059;
+  color: #ffffff;
+  border-color: #c5a059;
+}
+{%- endstyle -%}
+
+{%- assign has_active_subcategories = false -%}
+{%- if collection.metafields.price_editor.subcategories.value != blank -%}
+  {%- assign subcategories = collection.metafields.price_editor.subcategories.value -%}
+  {%- for sub in subcategories -%}
+    {%- assign suffix = sub.suffix | strip -%}
+    {%- if suffix == blank %}{% continue %}{% endif -%}
+    {%- assign sub_tag = "Sub: " | append: suffix -%}
+    {%- if collection.all_tags contains sub_tag -%}
+      {%- assign has_active_subcategories = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if has_active_subcategories -%}
+  <div class="collection-subcategories page-width">
+    <ul class="subcategories-list">
+      <li class="subcategory-item">
+        <a href="{{ collection.url }}" class="subcategory-link {% if current_tags == blank %}active{% endif %}">
+          <span class="subcategory-text">All</span>
+        </a>
+      </li>
+      {%- for sub in subcategories -%}
+        {%- assign suffix = sub.suffix | strip -%}
+        {%- if suffix == blank %}{% continue %}{% endif -%}
+        
+        {%- assign sub_tag = "Sub: " | append: suffix -%}
+        {%- if collection.all_tags contains sub_tag -%}
+          {%- assign sub_tag_handle = sub_tag | handleize -%}
+          <li class="subcategory-item">
+            <a href="{{ collection.url }}/{{ sub_tag_handle }}" class="subcategory-link {% if current_tags contains sub_tag %}active{% endif %}">
+              <span class="subcategory-text">{{ suffix }}</span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Espon Category Pills",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Espon Category Pills",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}
