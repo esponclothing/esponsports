@@ -308,22 +308,22 @@
     <div class="ecp-input-area">
       <div class="ecp-persistent-menu" id="espoMenuContainer">
         <div class="ecp-main-menu" id="espoMainMenu" style="display:flex; gap:8px;">
-          <button class="ecp-qr-btn" onclick="sendQuickReply('Track Order')">ðŸ“ Track Order</button>
-          <button class="ecp-qr-btn" onclick="sendQuickReply('Top 5 Articles')">â­ Top 5</button>
-          <button class="ecp-qr-btn" onclick="sendQuickReply('Offers')">ðŸŽ Offers</button>
-          <button class="ecp-qr-btn" onclick="toggleSubMenu('fabrics')">ðŸ§µ Fabrics â–¾</button>
-          <button class="ecp-qr-btn" onclick="toggleSubMenu('categories')">ðŸ‘• Categories â–¾</button>
+          <button class="ecp-qr-btn" onclick="sendQuickReply('Track Order')">📦 Track Order</button>
+          <button class="ecp-qr-btn" onclick="sendQuickReply('Top 5 Articles')">≡ Top 5</button>
+          <button class="ecp-qr-btn" onclick="sendQuickReply('Offers')">🎁 Offers</button>
+          <button class="ecp-qr-btn" onclick="toggleSubMenu('fabrics')">🧵 Fabrics ▾</button>
+          <button class="ecp-qr-btn" onclick="toggleSubMenu('categories')">👕 Categories ▾</button>
         </div>
         <div class="ecp-submenu" id="espoFabricsMenu">
-          <button class="ecp-qr-btn" onclick="toggleSubMenu('main')">â¬… Back</button>
+          <button class="ecp-qr-btn" onclick="toggleSubMenu('main')">⬅️ Back</button>
           <button class="ecp-qr-btn" onclick="sendQuickReply('NS Fabric')">NS Fabric</button>
           <button class="ecp-qr-btn" onclick="sendQuickReply('Terry Fabric')">Terry Fabric</button>
           <button class="ecp-qr-btn" onclick="sendQuickReply('Lycra Fabric')">Lycra Fabric</button>
         </div>
         <div class="ecp-submenu" id="espoCategoriesMenu">
-          <button class="ecp-qr-btn" onclick="toggleSubMenu('main')">â¬… Back</button>
-          <button class="ecp-qr-btn" onclick="sendQuickReply('Shorts')">ðŸ©³ Shorts</button>
-          <button class="ecp-qr-btn" onclick="sendQuickReply('Track Pants')">ðŸ‘– Track Pants</button>
+          <button class="ecp-qr-btn" onclick="toggleSubMenu('main')">⬅️ Back</button>
+          <button class="ecp-qr-btn" onclick="sendQuickReply('Shorts')">🩳 Shorts</button>
+          <button class="ecp-qr-btn" onclick="sendQuickReply('Track Pants')">👖 Track Pants</button>
         </div>
       </div>
 
@@ -610,9 +610,9 @@
         // 1. Show the user clicked Track Order
         const userMsg = document.createElement('div');
         userMsg.className = 'ecp-msg ecp-msg-user';
-        userMsg.textContent = "ðŸ“ Track Order";
+        userMsg.textContent = "📦 Track Order";
         chatBody.appendChild(userMsg);
-        saveMessage('user', "ðŸ“ Track Order");
+        saveMessage('user', "📦 Track Order");
         chatBody.scrollTop = chatBody.scrollHeight;
 
         if (typeof loggedInPhone !== 'undefined' && loggedInPhone && loggedInPhone.length >= 10) {

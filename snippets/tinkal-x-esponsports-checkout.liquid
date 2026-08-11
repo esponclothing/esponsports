@@ -21,7 +21,7 @@
   .wa-checkout-wrapper { width: 100%; min-height: 100%; display: flex; align-items: center; justify-content: center; }
 
   /* ── RIGHT PANEL ── */
-  .wa-right-panel { width: 100%; max-width: 480px; background: #fdfdfd; display: flex; flex-direction: column; min-height: 100%; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.05); } @media (min-width: 481px) { .wa-right-panel { min-height: auto; height: 95%; max-height: 900px; border-radius: 16px; overflow-y: auto; } }
+  .wa-right-panel { width: 100%; max-width: 480px; background: #fdfdfd; display: flex; flex-direction: column; min-height: 100%; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.05); } @media (min-width: 481px) { .wa-right-panel { min-height: auto; height: 95%; max-height: 900px; border-radius: 16px; overflow-y: auto; } } @media (max-width: 480px) { .wa-right-panel { max-width: 100%; min-height: 100dvh; border-radius: 0; } }
 
   /* ── HEADER ── */
   .wa-modal-header {
@@ -68,6 +68,43 @@
     max-width: 520px; width: 100%; margin: 0 auto;
     background: var(--wa-bg, #f1f5f9);
   }
+  @media (max-width: 480px) { 
+    .wa-content-area { padding: 20px 16px; } 
+    .wa-modal-header { padding: 14px 16px; } 
+
+    .wa-trust-badge-container {
+      padding: 10px !important;
+      gap: 6px !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+    }
+    .wa-trust-badge-container > div:not([style*="width:1px"]) {
+      flex: 1 1 30% !important;
+      min-width: 80px !important;
+      text-align: center !important;
+      flex-direction: column !important;
+      gap: 4px !important;
+    }
+    .wa-trust-badge-container > div[style*="width:1px"] {
+      display: none !important;
+    }
+    .wa-trust-badge-container div[style*="font-size:11px"] {
+      white-space: normal !important;
+      font-size: 10px !important;
+      line-height: 1.2 !important;
+      text-align: center !important;
+    }
+    .wa-trust-badge-container div[style*="font-size:10px"],
+    .wa-trust-badge-container div[style*="font-size:9px"] {
+      white-space: normal !important;
+      font-size: 9px !important;
+      line-height: 1.2 !important;
+      text-align: center !important;
+    }
+    .wa-trust-badge-container div[style*="text-align:left"] {
+      text-align: center !important;
+    }
+  }
 
   /* ── STEP INDICATOR ── */
   .wa-steps {
@@ -97,6 +134,7 @@
     font-size: 24px; font-weight: 800; color: var(--wa-heading, #0f172a);
     margin: 0 0 6px 0; letter-spacing: -0.5px; line-height: 1.2;
   }
+  @media (max-width: 480px) { .wa-section-title { font-size: 20px; } .wa-hide-on-mobile { display: none !important; } }
   .wa-section-desc {
     font-size: 14px; color: var(--wa-subheading, #64748b); margin: 0 0 28px 0; line-height: 1.5;
   }
@@ -258,6 +296,10 @@
   .wa-resend a { font-size: 13px; color: #3b82f6; text-decoration: none; font-weight: 500; }
   .wa-resend a:hover { text-decoration: underline; }
 
+  /* 🔄 SPINNER ANIMATION */
+  @keyframes wa-spin { 100% { transform: rotate(360deg); } }
+  .wa-spinner { animation: wa-spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
+
   /* ── WHATSAPP NOTE ── */
   .wa-wa-note {
     display: flex; align-items: center; gap: 8px;
@@ -394,7 +436,7 @@ window._shopifyCustomer = {
       <div class="wa-content-area" style="padding: 24px 24px;">
         
         <!-- TOP TRUST BADGES -->
-        <div id="wa-top-trust-badges" style="display:flex; justify-content:space-between; align-items:center; padding:16px; margin-bottom:28px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; box-shadow:0 1px 3px rgba(0,0,0,0.02); gap:8px;">
+        <div id="wa-top-trust-badges" class="wa-trust-badge-container" style="display:flex; justify-content:space-between; align-items:center; padding:16px; margin-bottom:28px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; box-shadow:0 1px 3px rgba(0,0,0,0.02); gap:8px;">
           <div style="display:flex; align-items:center; gap:8px; flex:1; justify-content:center;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" style="flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
             <div style="text-align:left;">
@@ -450,17 +492,17 @@ window._shopifyCustomer = {
               </div>
             </div>
             
-            <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#16a34a; font-weight:500; margin-bottom:24px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-              We'll send an OTP to this number on <span style="font-weight:700;">WhatsApp</span>
+            <div style="display:flex; align-items:flex-start; gap:6px; font-size:12px; color:#16a34a; font-weight:500; margin-bottom:24px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-top:2px; flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span>We'll send an OTP to this number on <span style="font-weight:700;">WhatsApp</span></span>
             </div>
           </div>
 
 
           
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:16px; border:1px solid #e2e8f0; border-radius:12px; margin-bottom:24px; background:#fff; gap:4px;">
+          <div class="wa-trust-badge-container" id="wa-mid-trust-badges" style="display:flex; justify-content:space-between; align-items:center; padding:12px 6px; border:1px solid #e2e8f0; border-radius:12px; margin-bottom:24px; background:#fff; gap:2px;">
             <div style="display:flex; align-items:center; gap:8px; flex:1; justify-content:center;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" style="flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke-width="1.5"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" style="flex-shrink:0;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
               <div style="text-align:left;">
                 <div style="font-size:11px; font-weight:700; color:#0f172a; white-space:nowrap;">Trusted by</div>
                 <div style="font-size:10px; color:#64748b; line-height:1.2;">1M+ Customers</div>
@@ -500,8 +542,8 @@ window._shopifyCustomer = {
           </button>
           
           <div style="text-align:center; font-size:11px; color:#475569; font-weight:600; display:flex; justify-content:center; align-items:center; gap:6px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Your security is our priority. We never share your details.
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Your security is our priority. We never share your details.</span>
           </div>
 
           <!-- Switch Account fallback -->
@@ -525,14 +567,14 @@ window._shopifyCustomer = {
           <h2 class="wa-section-title" style="font-size:24px; font-weight:800; margin-bottom:8px; color:#0f172a; letter-spacing:-0.5px;">Verify OTP</h2>
           <p class="wa-section-desc" style="font-size:14px; color:#475569; margin-bottom:4px;">Enter the 4-digit OTP sent to</p>
           <div style="font-size:16px; font-weight:700; color:#15803d; margin-bottom:20px; display:flex; justify-content:center; align-items:center; gap:8px;">
-            <span id="wa-otp-desc">+91 MASKED</span>
+            <span id="wa-otp-desc" style="color:#0f172a;"></span>
             <button type="button" onclick="waSwitchAccount(event)" style="background:#f0fdf4; border:none; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#16a34a;">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             </button>
           </div>
 
-          <div style="background:#f8fafc; border-radius:8px; padding:10px; display:inline-flex; align-items:center; gap:6px; font-size:12px; color:#64748b; margin-bottom:24px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          <div style="background:#f8fafc; border-radius:8px; padding:12px 10px; text-align:center; font-size:12px; color:#64748b; margin-bottom:24px; line-height:1.4;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" style="vertical-align:-2px; margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
             OTP is valid for <span style="font-weight:700; color:#16a34a;">2 minutes</span> for your security
           </div>
 
@@ -576,7 +618,7 @@ window._shopifyCustomer = {
           </div>
 
           <!-- Bottom Badges -->
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:16px; border:1px solid #e2e8f0; border-radius:12px; margin-bottom:24px; background:#f8fafc; text-align:left;">
+          <div class="wa-trust-badge-container" style="display:flex; justify-content:space-between; align-items:center; padding:16px; border:1px solid #e2e8f0; border-radius:12px; margin-bottom:24px; background:#f8fafc; text-align:left;">
             <div style="display:flex; align-items:center; gap:8px; flex:1;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
               <div>
@@ -807,8 +849,13 @@ window._shopifyCustomer = {
             <!-- Save Address Button -->
             <button type="button" id="wa-save-addr-btn" onclick="waSaveNewAddress()"
               style="width:100%; padding:18px; background:#0f172a; color:#fff; border:none; border-radius:14px; font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:12px; transition:0.2s;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               Save & Deliver to this Address
+            </button>
+            <!-- Cancel Button -->
+            <button type="button" id="wa-cancel-addr-btn" onclick="renderAddresses()"
+              style="display:none; width:100%; padding:14px; background:transparent; color:#64748b; border:none; font-size:14px; font-weight:600; cursor:pointer; margin-bottom:12px;">
+              Cancel
             </button>
             <div style="text-align:center; font-size:11px; color:#16a34a; font-weight:500; margin-bottom:24px; display:flex; justify-content:center; align-items:center; gap:4px;">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -821,12 +868,12 @@ window._shopifyCustomer = {
           </div><!-- /wa-new-address-form -->
 
           <!-- Coupon Code -->
-          <div style="display:flex; align-items:center; gap:0; margin-bottom:20px; background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; overflow:hidden; padding:4px 4px 4px 16px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" style="flex-shrink:0;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          <div style="display:flex; align-items:center; gap:0; margin-bottom:20px; background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; overflow:hidden; padding:4px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" style="flex-shrink:0; margin-left:12px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
             <input type="text" id="wa-coupon-code" placeholder="Have a discount code?" autocomplete="off"
-              style="flex:1; border:none; outline:none; padding:12px 10px; font-size:14px; font-weight:500; color:#0f172a; background:transparent; text-transform:uppercase;">
+              style="flex:1; min-width:0; border:none; outline:none; padding:12px 8px; font-size:13px; font-weight:500; color:#0f172a; background:transparent; text-transform:uppercase;">
             <button type="button" onclick="waApplyCoupon()"
-              style="padding:10px 20px; background:#f0fdf4; color:#16a34a; border:1.5px solid #bbf7d0; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; white-space:nowrap; margin:0;">
+              style="padding:10px 16px; background:#f0fdf4; color:#16a34a; border:1.5px solid #bbf7d0; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; white-space:nowrap; margin:0; flex-shrink:0;">
               Apply
             </button>
           </div>
@@ -869,57 +916,67 @@ window._shopifyCustomer = {
 
                 <!-- STEP 4: PAYMENT -->
         <div id="wa-step-4" style="display:none;">          <!-- Coupon -->
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
             <div>
-              <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <h2 class="wa-section-title" style="font-size:24px; margin:0; letter-spacing:-0.5px;">Payment Method</h2>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <h2 class="wa-section-title" style="font-size:18px; margin:0; letter-spacing:-0.5px; font-weight:800; color:#0f172a; white-space:nowrap;">Payment Method</h2>
               </div>
-              <p class="wa-section-desc" style="margin:0; font-size:13px; color:#64748b;">Choose the safest and most convenient way to pay.</p>
+              <p class="wa-section-desc" style="margin:2px 0 0 26px; font-size:11px; color:#64748b; line-height:1.2;">All transactions are secure.</p>
             </div>
-            <div style="display:flex; align-items:center; gap:4px; font-size:11px; color:#16a34a; background:#f0fdf4; border:1px solid #bbf7d0; padding:4px 10px; border-radius:20px; font-weight:600; flex-shrink:0;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Safe & Secure
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:#16a34a; background:#f0fdf4; border:1px solid #bbf7d0; padding:4px 8px; border-radius:20px; font-weight:700; flex-shrink:0;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Safe
             </div>
           </div>
 
           <div id="wa-payment-error" style="color: #ef4444; font-size: 13px; font-weight: 500; margin-bottom: 12px; display: none; padding:10px; background:#fef2f2; border:1px solid #fecaca; border-radius:8px;"></div>
           
-          <div id="wa-payment-methods-container" style="display:flex; flex-direction:column; gap:16px; margin-bottom:24px;">
+          <div id="wa-payment-methods-container" style="display:flex; flex-direction:column; gap:12px; margin-bottom:12px;">
             <!-- Rendered dynamically by waGoToStep(4) -->
           </div>
 
           <!-- Store Credit / Wallet Section (shown only if store_credit_enabled) -->
-          <div id="wa-wallet-section" style="display:none; margin-bottom:20px;">
-             <div class="wa-payment-option wa-pay-opt" id="wa-wallet-card" style="margin-top:12px; cursor: pointer; transition: 0.2s; border:1.5px dashed #cbd5e1; background:#f8fafc;" onclick="waToggleWalletCredit()">
-                <div style="display:flex; width:100%; align-items:flex-start; gap:14px;">
-                   <div class="wa-checkbox-btn" id="wa-wallet-checkbox" style="width:20px; height:20px; border-radius:4px; border:2px solid #94a3b8; display:flex; align-items:center; justify-content:center; margin-top:2px; transition:0.2s;">
-                      <svg id="wa-wallet-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="display:none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div id="wa-wallet-section" style="display:none; margin-bottom:12px;">
+             <div class="wa-pay-opt" id="wa-wallet-card" style="margin-top:0; padding:12px 14px; cursor: pointer; transition: 0.2s; border:1px solid #e2e8f0; border-radius:10px; background:#f8fafc; display:flex; align-items:center; justify-content:space-between;" onclick="waToggleWalletCredit()">
+                
+                <div style="display:flex; align-items:center; gap:10px; flex:1;">
+                   <div style="background:#e0e7ff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M17 12h.01"/><path d="M7 12h.01"/></svg>
                    </div>
-                   <div style="flex:1;">
-                     <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                        <div style="display:flex; gap:12px; align-items:center;">
-                           <div class="wa-icon-circ" style="background:#e0e7ff;">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 2-2h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5H5a2 2 0 0 1-2-2z"/></svg>
-                           </div>
-                           <div>
-                             <div style="font-weight:700; color:#1e293b; font-size:16px;">Store Credit Wallet</div>
-                             <div style="font-size:12px; color:#64748b; margin-top:2px;">Available: <strong id="wa-wallet-balance-display">₹0</strong></div>
-                           </div>
-                        </div>
+                   <div style="display:flex; flex-direction:column;">
+                     <div style="display:flex; align-items:center; gap:6px;">
+                       <span style="font-weight:700; color:#0f172a; font-size:13px;">Use Store Credit</span>
+                       <div id="wa-wallet-applied-row" style="display:none; font-size:10px; font-weight:800; color:#4f46e5; background:#eff6ff; padding:2px 6px; border-radius:12px;">
+                          <span id="wa-wallet-applied-amt">-₹0</span>
+                       </div>
                      </div>
-                     <div id="wa-wallet-usable-text" style="font-size:11px; color:#64748b; margin-top:8px;">Max usable: ₹0</div>
-                     <div id="wa-wallet-applied-row" style="display:none; margin-top:12px; background:#fff; border-radius:8px; padding:10px; border:1px solid #c7d2fe; display:none; align-items:center; justify-content:space-between;">
-                        <span style="font-size:13px; font-weight:600; color:#4f46e5;">Applied to order</span>
-                        <span style="font-size:14px; font-weight:800; color:#1e293b;" id="wa-wallet-applied-amt">-₹0</span>
-                     </div>
+                     <span style="font-size:11px; color:#64748b; font-weight:500;">Balance: <strong id="wa-wallet-balance-display" style="color:#0f172a;">₹0</strong></span>
+                     <div id="wa-wallet-usable-text" style="display:none;"></div>
                    </div>
                 </div>
+
+                <div id="wa-wallet-checkbox" style="position:relative; width:34px; height:20px; background:#cbd5e1; border-radius:20px; transition:0.3s; display:flex; align-items:center; padding:2px; flex-shrink:0; border:none;">
+                   <div id="wa-wallet-check-icon" style="width:16px; height:16px; background:#fff; border-radius:50%; box-shadow:0 1px 3px rgba(0,0,0,0.15); transition:0.3s; transform:translateX(0); display:block;"></div>
+                </div>
+                
              </div>
           </div>
 
 
+          <button type="button" class="wa-btn-primary" id="wa-cod-btn" onclick="waPayNow()" style="background:#0f172a; padding:18px; margin-bottom:12px; display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span id="wa-pay-btn-text" style="font-size:16px;">Pay Securely Now →</span>
+            </div>
+            <span id="wa-pay-btn-subtext" style="font-size:11px; font-weight:500; color:rgba(255,255,255,0.8);">Complete your order and save ₹45</span>
+          </button>
+
+          <div style="text-align:center; margin-bottom:16px;">
+            <a href="#" onclick="waBackToAddress(); return false;" style="color:#64748b; font-size:13px; font-weight:600; text-decoration:none;">← Back to Address</a>
+          </div>
+
           <!-- Trust Badges Footer -->
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; padding:16px 0; border-top:1px dashed #e2e8f0; margin-bottom:24px;">
+          <div class="wa-hide-on-mobile" style="display:flex; justify-content:space-between; align-items:flex-start; padding:16px 0; border-top:1px dashed #e2e8f0; margin-bottom:12px;">
             <div style="text-align:center; flex:1;">
               <div style="display:flex; justify-content:center; margin-bottom:6px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
               <div style="font-size:11px; font-weight:700; color:#0f172a; margin-bottom:2px;">Best Price</div>
@@ -937,19 +994,7 @@ window._shopifyCustomer = {
             </div>
           </div>
 
-          <button type="button" class="wa-btn-primary" id="wa-cod-btn" onclick="waPayNow()" style="background:#0f172a; padding:18px; margin-bottom:12px; display:flex; flex-direction:column; align-items:center; gap:2px;">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span id="wa-pay-btn-text" style="font-size:16px;">Pay Securely Now →</span>
-            </div>
-            <span id="wa-pay-btn-subtext" style="font-size:11px; font-weight:500; color:rgba(255,255,255,0.8);">Complete your order and save ₹45</span>
-          </button>
-          
-          <button type="button" class="wa-btn-secondary" onclick="waBackToAddress()" style="width:100%; padding:16px; background:#fff; border:1px solid #e2e8f0; border-radius:10px; color:#475569; font-weight:600; font-size:14px; cursor:pointer; margin-bottom:24px; transition:0.2s;">
-            ← Back to Address
-          </button>
-
-          <div style="text-align:center; font-size:11px; color:#64748b; margin-bottom:24px; display:flex; justify-content:center; align-items:center; gap:4px;">
+          <div style="text-align:center; font-size:11px; color:#64748b; margin-bottom:12px; display:flex; justify-content:center; align-items:center; gap:4px;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             Your security is our priority. We never share your details.
           </div>
@@ -971,7 +1016,7 @@ window._shopifyCustomer = {
 
 <script>
   const WA_API_BASE = 'https://checkout-app-one-lilac.vercel.app/api';
-  const MERCHANT_KEY = 'sk_live_esponsports_h47rwi3ny0j';
+  const MERCHANT_KEY = 'sk_live_11fit_106b31bb8dd7a7';
 
   let waPhone = null;
   let waSignature = null;
@@ -1147,8 +1192,8 @@ window._shopifyCustomer = {
         localStorage.setItem('espon_user_phone', digits);
         localStorage.setItem('fit11_user_phone', digits);
         localStorage.setItem('notify_phone_number', digits);
-        sessionStorage.setItem('wa_verified_phone', digits);
-        sessionStorage.setItem('fit11_verified_phone', digits);
+        localStorage.setItem('wa_verified_phone', digits);
+        localStorage.setItem('fit11_verified_phone', digits);
         document.cookie = `wa_saved_phone=${digits}; path=/; max-age=2592000`; // 30 days
       } catch(e) {}
     }
@@ -1179,7 +1224,16 @@ window._shopifyCustomer = {
       for (let k of keys) {
         try {
           let v = localStorage.getItem(k) || sessionStorage.getItem(k);
-          if (v) { phone = v; break; }
+          if (v && v !== 'undefined' && v !== 'null') {
+            let digits = String(v).replace(/\D/g, '');
+            if (digits.length > 10 && (digits.startsWith('91') || digits.startsWith('0'))) {
+              digits = digits.slice(-10);
+            }
+            if (digits.length === 10) { 
+              phone = digits; 
+              break; 
+            }
+          }
         } catch(e) {}
       }
     }
@@ -1202,7 +1256,16 @@ window._shopifyCustomer = {
         for (let c of cookies) {
           let [name, val] = c.split('=');
           if (name === 'wa_saved_phone' || name === 'notify_phone_number' || name === 'user_phone') {
-            if (val) { phone = decodeURIComponent(val); break; }
+            if (val && val !== 'undefined' && val !== 'null') { 
+              let digits = String(decodeURIComponent(val)).replace(/\D/g, '');
+              if (digits.length > 10 && (digits.startsWith('91') || digits.startsWith('0'))) {
+                digits = digits.slice(-10);
+              }
+              if (digits.length === 10) { 
+                phone = digits; 
+                break; 
+              }
+            }
           }
         }
       } catch(e) {}
@@ -1405,12 +1468,14 @@ window._shopifyCustomer = {
         const res = await fetch(`${WA_API_BASE}/identify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ device_id, merchant_key: MERCHANT_KEY })
+          body: JSON.stringify({ device_id, merchant_key: MERCHANT_KEY, include_settings: true })
         });
         const data = await res.json();
         if (data.payment_settings && Object.keys(data.payment_settings).length > 0) {
           waPaymentSettings = data.payment_settings;
           const _ps = data.payment_settings;
+          waSelectedPayment = null;
+          calculateCheckoutTotals();
           const _sv = (name, val, fb) => document.documentElement.style.setProperty(name, val || fb);
           _sv('--wa-theme',      _ps.theme_color,    '#0f172a');
           _sv('--wa-bg',         _ps.bg_main,        '#f1f5f9');
@@ -1437,6 +1502,10 @@ window._shopifyCustomer = {
             if (_emailInput) { _emailInput.required = false; _emailInput.placeholder = 'you@example.com (Optional)'; }
             if (_emailBadge) { _emailBadge.textContent = '(Optional)'; _emailBadge.style.color = '#94a3b8'; }
           }
+        }
+        
+        if (data.first_name) {
+          waUpdateHeaderGreeting(data.first_name);
         }
 
         if (data.identified && data.masked_phone && !cachedPhone) {
@@ -1602,6 +1671,16 @@ window._shopifyCustomer = {
     const switchAcct = document.getElementById('wa-switch-account'); if (switchAcct) switchAcct.style.display = 'none';
     waPhone = null;
     
+    // Clear persisted sessions when switching accounts
+    sessionStorage.removeItem('fit11_verified_phone');
+    sessionStorage.removeItem('fit11_verified_email');
+    localStorage.removeItem('fit11_verified_phone');
+    localStorage.removeItem('fit11_verified_email');
+    localStorage.removeItem('wa_saved_phone');
+    localStorage.removeItem('wa_user_phone');
+    localStorage.removeItem('fit11_user_phone');
+    document.cookie = 'wa_saved_phone=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    
     const phoneInput = document.getElementById('wa-phone');
     if (phoneInput) {
       phoneInput.value = '';
@@ -1665,7 +1744,7 @@ window._shopifyCustomer = {
       
       waSignature = data.signature;
       if (data.real_phone) waPhone = data.real_phone;
-      document.getElementById('wa-otp-desc').innerText = '+91 ' + waPhone;
+      document.getElementById('wa-otp-desc').innerText = waPhone.startsWith('+') ? waPhone : '+91 ' + waPhone;
       document.getElementById('wa-step-1').style.display = 'none';
       document.getElementById('wa-step-2').style.display = 'block';
       waSetStep(2);
@@ -1676,7 +1755,7 @@ window._shopifyCustomer = {
       alert(errMsg);
     } finally {
       btn.disabled = false;
-      btn.innerHTML = 'Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      btn.innerHTML = originalBtnHTML;
     }
   }
 
@@ -1685,16 +1764,17 @@ window._shopifyCustomer = {
     let timeLeft = waOtpSendCount === 1 ? 60 : 300;
     const link = document.getElementById('wa-resend-link');
     const timerText = document.getElementById('wa-resend-timer');
+    const timerWrap = document.getElementById('wa-resend-timer-wrap');
     
     link.style.display = 'none';
-    timerText.style.display = 'inline-block';
+    if(timerWrap) timerWrap.style.display = 'flex';
     
     waResendInterval = setInterval(() => {
       timeLeft--;
       if (timeLeft <= 0) {
         clearInterval(waResendInterval);
         link.style.display = 'inline-block';
-        timerText.style.display = 'none';
+        if(timerWrap) timerWrap.style.display = 'none';
       } else {
         const m = Math.floor(timeLeft / 60);
         const s = timeLeft % 60;
@@ -1730,10 +1810,19 @@ window._shopifyCustomer = {
       
       // Save to session so they don't have to re-verify if they navigate away and come back
       sessionStorage.setItem('fit11_verified_phone', waPhone);
+      localStorage.setItem('fit11_verified_phone', waPhone);
+      document.cookie = `wa_saved_phone=${waPhone}; path=/; max-age=2592000`; // 30 days
+      
       if (data.profile && data.profile.email) {
         sessionStorage.setItem('fit11_verified_email', data.profile.email);
+        localStorage.setItem('fit11_verified_email', data.profile.email);
         const emailInput = document.getElementById('wa-email');
         if (emailInput) emailInput.value = data.profile.email;
+      }
+      if (data.profile && data.profile.first_name) {
+        waUpdateHeaderGreeting(data.profile.first_name);
+      } else {
+        waUpdateHeaderGreeting();
       }
 
       // Store wallet balance from verify response (avoids extra API call at payment step)
@@ -1753,7 +1842,7 @@ window._shopifyCustomer = {
       document.querySelectorAll('.wa-otp-box')[0].focus();
     } finally {
       btn.disabled = false;
-      btn.innerHTML = 'Verify & Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      btn.innerHTML = originalBtnHTML;
     }
   }
 
@@ -1764,7 +1853,8 @@ window._shopifyCustomer = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ merchant_key: MERCHANT_KEY, phone: waPhone, action: 'FETCH' })
       });
-      const data = await res.json();
+      let data = {};
+      try { data = await res.json(); } catch(e) {}
       const networkAddrs = data.addresses || [];
       
       // Combine existing loaded ones (from Shopify Liquid) and fetched ones
@@ -1806,16 +1896,21 @@ window._shopifyCustomer = {
   }
 
   function renderAddresses() {
+    try {
     const list = document.getElementById('wa-address-list');
-    list.innerHTML = '';
-    if (waAddresses.length === 0) {
+    if (list) list.innerHTML = '';
+    if (!waAddresses || waAddresses.length === 0) {
       waShowAddressForm();
-      document.getElementById('wa-cod-btn').disabled = true;
+      const codBtn = document.getElementById('wa-cod-btn');
+      if (codBtn) codBtn.disabled = true;
       return;
     }
-    document.getElementById('wa-add-addr-btn').style.display = 'block';
+    const addBtn = document.getElementById('wa-add-addr-btn');
+    if (addBtn) addBtn.style.display = 'block';
     const dh = document.getElementById('wa-deliver-here-btn'); if(dh) dh.style.display = 'flex';
-    document.getElementById('wa-new-address-form').style.display = 'none';
+    const formEl = document.getElementById('wa-new-address-form');
+    if (formEl) formEl.style.display = 'none';
+    const alList = document.getElementById('wa-address-list'); if (alList) alList.style.display = 'block';
 
     if (!waSelectedAddress) waSelectedAddress = waAddresses[0].id;
 
@@ -1870,16 +1965,28 @@ window._shopifyCustomer = {
       html += `</div>`;
     }
 
-    list.innerHTML = html;
-    document.getElementById('wa-cod-btn').disabled = false;
+    if (list) list.innerHTML = html;
+    const codBtnEl = document.getElementById('wa-cod-btn');
+    if (codBtnEl) codBtnEl.disabled = false;
+    } catch(e) { console.error('Error in renderAddresses:', e); }
   }
 
   function waShowAddressForm() {
+    try {
     waEditingAddressId = null;
-    document.getElementById('wa-add-addr-btn').style.display = 'none';
+    const addBtn2 = document.getElementById('wa-add-addr-btn'); if(addBtn2) addBtn2.style.display = 'none';
     const dh = document.getElementById('wa-deliver-here-btn'); if(dh) dh.style.display = 'none';
-    document.getElementById('wa-new-address-form').style.display = 'block';
-    document.getElementById('wa-save-addr-btn').innerText = 'Save Address';
+    const formEl2 = document.getElementById('wa-new-address-form'); if(formEl2) formEl2.style.display = 'block';
+    const al = document.getElementById('wa-address-list'); if (al) al.style.display = 'none';
+    const cancelBtn = document.getElementById('wa-cancel-addr-btn');
+    if (cancelBtn) {
+      if (typeof waAddresses !== 'undefined' && waAddresses && waAddresses.length > 0) {
+        cancelBtn.style.display = 'block';
+      } else {
+        cancelBtn.style.display = 'none';
+      }
+    }
+    const saveBtn = document.getElementById('wa-save-addr-btn'); if(saveBtn) saveBtn.innerText = 'Save Address';
     
     // Clear fields correctly safely
     ['wa-first-name','wa-last-name','wa-address1','wa-address2','wa-city','wa-zip','wa-province','wa-addr-district'].forEach(id => {
@@ -1905,6 +2012,7 @@ window._shopifyCustomer = {
     if (errEl) errEl.style.display = 'none';
     const statEl = document.getElementById('wa-pin-status');
     if (statEl) statEl.innerText = '';
+    } catch(e) { console.error('Error in waShowAddressForm:', e); }
   }
 
   function waEditAddress(id) {
@@ -2636,14 +2744,14 @@ window._shopifyCustomer = {
     if (waWalletApplied) {
       waWalletAppliedAmt = Math.round(computeWalletUsable() * 100) / 100;
       if (card) { card.style.borderColor = 'var(--wa-primary, #0f172a)'; card.style.background = '#f0f9ff'; }
-      if (checkbox) { checkbox.style.borderColor = 'var(--wa-primary, #0f172a)'; checkbox.style.background = 'var(--wa-primary, #0f172a)'; }
-      if (checkIcon) checkIcon.style.display = 'block';
-      if (appliedRow) { appliedRow.style.display = 'flex'; appliedRow.style.background = '#eff6ff'; }
+      if (checkbox) { checkbox.style.background = 'var(--wa-primary, #0f172a)'; checkbox.style.borderColor = 'transparent'; }
+      if (checkIcon) { checkIcon.style.transform = 'translateX(14px)'; }
+      if (appliedRow) { appliedRow.style.display = 'flex'; }
       if (appliedAmt) appliedAmt.innerText = `-₹${waWalletAppliedAmt.toFixed(2)}`;
     } else {
-      if (card) { card.style.borderColor = '#cbd5e1'; card.style.background = '#f8fafc'; }
-      if (checkbox) { checkbox.style.borderColor = '#94a3b8'; checkbox.style.background = 'transparent'; }
-      if (checkIcon) checkIcon.style.display = 'none';
+      if (card) { card.style.borderColor = '#e2e8f0'; card.style.background = '#f8fafc'; }
+      if (checkbox) { checkbox.style.background = '#cbd5e1'; checkbox.style.borderColor = 'transparent'; }
+      if (checkIcon) { checkIcon.style.transform = 'translateX(0)'; }
       if (appliedRow) appliedRow.style.display = 'none';
     }
   }
@@ -2714,15 +2822,15 @@ function renderPaymentMethods() {
       
       const uniqueCss = `
         <style>
-          .wa-pay-opt { border:1px solid #e2e8f0; border-radius:14px; padding:20px; cursor:pointer; margin-bottom:16px; transition:0.2s; position:relative; overflow:hidden; }
+          .wa-pay-opt { border:1px solid #e2e8f0; border-radius:14px; padding:10px 14px; cursor:pointer; transition:0.2s; position:relative; overflow:hidden; }
           .wa-pay-opt.selected { border-color:#22c55e; background:#fff; }
 
-          .wa-rec-badge { position:absolute; top:0; left:16px; background:#22c55e; color:#fff; font-size:9px; font-weight:800; padding:4px 10px; border-radius:0 0 8px 8px; letter-spacing:0.5px; }
+          .wa-rec-badge { position:absolute; top:0; left:16px; background:#22c55e; color:#fff; font-size:9px; font-weight:800; padding:2px 8px; border-radius:0 0 6px 6px; letter-spacing:0.5px; }
           .wa-radio-btn { width:22px; height:22px; border:2px solid #cbd5e1; border-radius:50%; position:relative; flex-shrink:0; margin-top:2px; }
           .wa-pay-opt.selected .wa-radio-btn { border-color:#22c55e; }
           .wa-pay-opt.selected .wa-radio-btn::after { content:''; position:absolute; inset:4px; background:#22c55e; border-radius:50%; }
-          .wa-icon-circ { width:48px; height:48px; background:#f8fafc; border-radius:50%; display:flex; align-items:center; justify-content:center; position:relative; flex-shrink:0; }
-          .wa-shield-badge { position:absolute; bottom:0; right:0; background:#22c55e; color:#fff; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid #fff; }
+          .wa-icon-circ { width:32px; height:32px; background:#f8fafc; border-radius:50%; display:flex; align-items:center; justify-content:center; position:relative; flex-shrink:0; }
+          .wa-shield-badge { position:absolute; bottom:0; right:0; background:#22c55e; color:#fff; width:14px; height:14px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid #fff; }
           .wa-logos-row img { filter: grayscale(0%); opacity: 1; mix-blend-mode: multiply; }
         </style>
       `;
@@ -2755,18 +2863,18 @@ function renderPaymentMethods() {
                          <div class="wa-shield-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg></div>
                        </div>
                        <div>
-                         <div style="font-weight:700; color:#1e293b; font-size:16px;">Pay Online (UPI, Cards)</div>
+                         <div style="font-weight:700; color:#1e293b; font-size:14px; letter-spacing:-0.2px;">Pay Online (UPI, Card)</div>
                          <div style="font-size:12px; color:#64748b; margin-top:2px;">Fast, secure & hassle-free</div>
                          ${(disc > 0 || (waPaymentSettings.cashback_enabled && waPaymentSettings.cashback_value > 0)) ? `<div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
-                           ${disc > 0 ? `<span style="display:inline-flex; align-items:center; color:#059669; font-weight:800; font-size:10px; background: #ecfdf5; padding:3px 8px; border-radius:4px; border:1px dashed #10b981; letter-spacing:0.5px; text-transform:uppercase;">
-                             <svg width="12" height="12" style="margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                             YOU SAVE ₹${Math.round(disc)}
+                           ${disc > 0 ? `<span style="display:inline-flex; align-items:center; color:#059669; font-weight:800; font-size:9px; background: #ecfdf5; padding:2px 6px; border-radius:4px; border:1px dashed #10b981; letter-spacing:0.2px; text-transform:uppercase;">
+                             <svg width="10" height="10" style="margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                             SAVE ₹${Math.round(disc)}
                            </span>` : ''}
                            ${(waPaymentSettings.cashback_enabled && waPaymentSettings.cashback_value > 0) ? (function(){
-                             let cbAmt = waPaymentSettings.cashback_type === 'percent' ? Math.round((baseTotal * waPaymentSettings.cashback_value) / 100) : Math.round(waPaymentSettings.cashback_value);
-                             return `<span style="display:inline-flex; align-items:center; color:#4f46e5; font-weight:800; font-size:10px; background: #e0e7ff; padding:3px 8px; border-radius:4px; border:1px dashed #6366f1; letter-spacing:0.5px; text-transform:uppercase;">
-                             <svg width="12" height="12" style="margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><path d="M18 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
-                             + ₹${cbAmt} CASHBACK
+                             let cbAmt = waPaymentSettings.cashback_type === 'percent' ? Math.round(((baseTotal - disc) * waPaymentSettings.cashback_value) / 100) : Math.round(waPaymentSettings.cashback_value);
+                             return `<span style="display:inline-flex; align-items:center; color:#4f46e5; font-weight:800; font-size:9px; background: #e0e7ff; padding:2px 6px; border-radius:4px; border:1px dashed #6366f1; letter-spacing:0.2px; text-transform:uppercase; white-space:nowrap;">
+                             <svg width="10" height="10" style="margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><path d="M18 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
+                             + ₹${cbAmt} Store Credit
                            </span>`;
                            })() : ''}
                          </div>` : ''}
@@ -2778,25 +2886,25 @@ function renderPaymentMethods() {
                     </div>
                  </div>
                  ${isSelected ? `
-                 <div style="margin-top:20px; animation:waFadeIn 0.3s ease;">
-                    <div style="background:#f8fafc; border:1px solid #f1f5f9; border-radius:8px; padding:12px; display:flex; align-items:center; justify-content:space-between;">
-                      <div style="display:flex; gap:10px; align-items:center;">
-                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-                         <div>
-                            <div style="color:#059669; font-size:12px; font-weight:700;">100% Secure Payment</div>
-                            <div style="color:#64748b; font-size:10px; margin-top:2px; line-height:1.4;">Your payment details are encrypted<br>and protected.</div>
-                         </div>
-                      </div>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    </div>
-                    <div class="wa-logos-row" style="display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding:0 4px;">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" style="height:14px;" />
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg" style="height:14px;" />
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" style="height:10px;" />
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" style="height:14px;" />
-                      <img src="https://cdn.shopify.com/s/assets/payment_icons/visa-319d545c6fd255c9aad5eeaad21fd6f7f7b4fdbdb1a35ce83b89cca12a187f00.svg" style="height:12px;" />
-                    </div>
-                 </div>
+                 <div style="margin-top:10px; animation:waFadeIn 0.3s ease;">
+                     <div style="background:#f8fafc; border:1px solid #f1f5f9; border-radius:8px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between;">
+                       <div style="display:flex; gap:10px; align-items:center;">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                          <div>
+                             <div style="color:#059669; font-size:11px; font-weight:700;">100% Secure Payment</div>
+                             <div style="color:#64748b; font-size:9px; margin-top:1px; line-height:1.2;">Your payment details are encrypted<br>and protected.</div>
+                          </div>
+                       </div>
+                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                     </div>
+                     <div class="wa-logos-row" style="display:flex; align-items:center; justify-content:space-between; margin-top:12px; padding:0 4px;">
+                       <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" style="height:12px;" />
+                       <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg" style="height:12px;" />
+                       <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" style="height:9px;" />
+                       <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" style="height:12px;" />
+                       <img src="https://cdn.shopify.com/s/assets/payment_icons/visa-319d545c6fd255c9aad5eeaad21fd6f7f7b4fdbdb1a35ce83b89cca12a187f00.svg" style="height:10px;" />
+                     </div>
+                  </div>
                  ` : ''}
                </div>
             </div>
@@ -2885,7 +2993,7 @@ function renderPaymentMethods() {
                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
                        </div>
                        <div>
-                         <div style="font-weight:700; color:#1e293b; font-size:16px;">Cash on Delivery</div>
+                         <div style="font-weight:700; color:#1e293b; font-size:14px; letter-spacing:-0.2px;">Cash on Delivery</div>
                          <div style="font-size:12px; color:#64748b; margin-top:2px;">Pay when your order arrives</div>
                          ${fee > 0 ? `<div style="font-size:11px; color:#ef4444; margin-top:4px; font-weight:600;">+ ₹${fee} COD fee applies</div>` : ''}
                        </div>
@@ -2961,20 +3069,19 @@ function renderPaymentMethods() {
   async function waPayNow() {
       const btn = document.getElementById('wa-cod-btn');
       const errEl = document.getElementById('wa-payment-error');
+      const btnText = document.getElementById('wa-pay-btn-text');
+      const btnSubtext = document.getElementById('wa-pay-btn-subtext');
+      const originalBtnHTML = btn.innerHTML;
+      
       btn.disabled = true;
-      btn.innerHTML = '⏳ Processing...';
-      if (window.waProcessingInterval) clearInterval(window.waProcessingInterval);
-      window.waProcessingInterval = setInterval(() => {
-        if (!btn.disabled) {
-           clearInterval(window.waProcessingInterval);
-           return;
-        }
-        const texts = ['⏳ Processing...', '⏳ Creating Order...', '⏳ Confirming...', '⏳ Securely saving...', '⏳ Almost done...'];
-        let curText = btn.innerText.trim();
-        let nextIdx = texts.indexOf(curText) + 1;
-        if (nextIdx >= texts.length || nextIdx === 0) nextIdx = 1; 
-        btn.innerHTML = texts[nextIdx];
-      }, 2500);
+      btn.style.opacity = '0.8';
+      
+      if (btnText && btnSubtext) {
+        btnText.innerHTML = '<svg class="wa-spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"/></svg>Processing...';
+        btnSubtext.innerText = 'Please do not close this window';
+      } else {
+        btn.innerHTML = '<div style="display:flex;align-items:center;gap:8px;"><svg class="wa-spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"/></svg><span>Processing...</span></div>';
+      }
       
       errEl.style.display = 'none';
       
@@ -2982,17 +3089,19 @@ function renderPaymentMethods() {
       
       // Email validation
       if (waPaymentSettings?.email_required === true && !waEmail) {
-        errEl.innerText = 'Please enter your email address in the address section to continue.';
+        errEl.innerText = 'Please enter your email address to continue.';
         errEl.style.display = 'block';
         btn.disabled = false;
-        btn.innerHTML = 'Pay Now <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        btn.style.opacity = '1';
+        btn.innerHTML = originalBtnHTML;
         return;
       }
       if (waEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(waEmail)) {
         errEl.innerText = 'Please enter a valid email address.';
         errEl.style.display = 'block';
         btn.disabled = false;
-        btn.innerHTML = 'Pay Now <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        btn.style.opacity = '1';
+        btn.innerHTML = originalBtnHTML;
         return;
       }
       let addr = waAddresses.find(a => 
@@ -3007,7 +3116,8 @@ function renderPaymentMethods() {
         errEl.style.display = 'block';
         errEl.scrollIntoView({ behavior: 'smooth' });
         btn.disabled = false;
-        btn.innerHTML = 'Pay Now <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        btn.style.opacity = '1';
+        btn.innerHTML = originalBtnHTML;
         return;
       }
       
@@ -3042,7 +3152,8 @@ function renderPaymentMethods() {
           errEl.style.display = 'block';
           errEl.scrollIntoView({ behavior: 'smooth' });
           btn.disabled = false;
-          btn.innerHTML = '<span id="wa-pay-btn-text">Pay Now</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+          btn.style.opacity = '1';
+          btn.innerHTML = originalBtnHTML;
         }
         return;
       } else {
@@ -3066,16 +3177,40 @@ function renderPaymentMethods() {
           try {
             await finishOrderBackend({ payment_method: waSelectedPayment, shipping_address: addr });
           } catch (e) {
-            errEl.innerText = 'Error: ' + (e.message || 'Failed to complete order.');
-            errEl.style.display = 'block';
-            errEl.scrollIntoView({ behavior: 'smooth' });
+            console.error(e);
             btn.disabled = false;
-            btn.innerHTML = '<span id="wa-pay-btn-text">Pay Now</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+            btn.style.opacity = '1';
+            btn.innerHTML = originalBtnHTML;
+            errEl.innerText = err.message || 'Failed to complete order. Please contact support.';
           }
           return;
         }
 
         try {
+          // STEP 1: Apply discount + link customer to Shopify draft BEFORE Cashfree payment.
+          // This ensures: correct discounted price in Shopify order + correct customer details.
+          try {
+            const udRes = await fetch(`${WA_API_BASE}/checkout/update-draft`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ 
+                merchant_key: MERCHANT_KEY, 
+                draft_order_id: waDraftOrderId,
+                payment_method: waSelectedPayment,
+                customer_email: waEmail,
+                customer_phone: waPhone,
+                shipping_address: addr
+              })
+            });
+            if (!udRes.ok) {
+              const udErr = await udRes.json().catch(() => ({}));
+              console.warn('update-draft warning (non-fatal):', udErr);
+            }
+          } catch(udErr) {
+            console.warn('update-draft network error (non-fatal):', udErr);
+          }
+
+          // STEP 2: Create Cashfree payment session (now using discounted draft total)
           const res = await fetch(`${WA_API_BASE}/checkout/create-payment`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -3120,23 +3255,20 @@ function renderPaymentMethods() {
             if (overlay) overlay.style.display = originalDisplay;
             
             if (result.error) {
-              const exactErr = result.error.message || result.error.code || (typeof result.error === 'string' ? result.error : JSON.stringify(result.error)) || 'Payment failed or cancelled by user.';
-              errEl.innerText = 'Payment Error: ' + exactErr;
-              errEl.style.display = 'block';
-              errEl.style.padding = '12px';
-              errEl.style.background = '#fef2f2';
-              errEl.style.border = '1px solid #f87171';
-              errEl.style.borderRadius = '8px';
-              errEl.style.color = '#dc2626';
-              errEl.scrollIntoView({ behavior: 'smooth' });
               btn.disabled = false;
-              btn.innerHTML = '<span id="wa-pay-btn-text">Pay Now</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+              btn.style.opacity = '1';
+              btn.innerHTML = originalBtnHTML;
+              errEl.innerText = result.error.message || 'Payment failed or cancelled.';
+              errEl.style.display = 'block';
+            } else if (result.paymentDetails && (result.paymentDetails.paymentStatus === 'SUCCESS' || result.paymentDetails.paymentMessage)) {
+              await finishOrderBackend({ payment_method: waSelectedPayment, shipping_address: addr, cashfree_order_id: data.order_id });
             } else {
-              if (result.paymentDetails && result.paymentDetails.paymentMessage) {
-                await finishOrderBackend({ payment_method: waSelectedPayment, shipping_address: addr, cashfree_order_id: data.order_id });
-              }
-            }
-          }).catch((cfErr) => {
+              btn.disabled = false;
+              btn.style.opacity = '1';
+              btn.innerHTML = originalBtnHTML;
+              errEl.innerText = 'Payment was cancelled or not completed. Please try again.';
+              errEl.style.display = 'block';
+            }}).catch((cfErr) => {
             if (overlay) overlay.style.display = originalDisplay;
             const exactErr = (cfErr && cfErr.message) ? cfErr.message : (typeof cfErr === 'string' ? cfErr : JSON.stringify(cfErr));
             errEl.innerText = 'Payment Gateway Error: ' + exactErr;
@@ -3148,7 +3280,7 @@ function renderPaymentMethods() {
             errEl.style.color = '#dc2626';
             errEl.scrollIntoView({ behavior: 'smooth' });
             btn.disabled = false;
-            btn.innerHTML = '<span id="wa-pay-btn-text">Pay Now</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+            btn.innerHTML = originalBtnHTML;
           });
   
         } catch(e) {
@@ -3165,7 +3297,7 @@ function renderPaymentMethods() {
           errEl.style.color = '#dc2626';
           errEl.scrollIntoView({ behavior: 'smooth' });
           btn.disabled = false;
-          btn.innerHTML = '<span id="wa-pay-btn-text">Pay Now</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+          btn.innerHTML = originalBtnHTML;
         }
       }
     }
@@ -3227,6 +3359,16 @@ function renderPaymentMethods() {
         scBox.style.display = 'inline-block';
       }
 
+      const scDesc = document.getElementById('wa-success-desc');
+      if (scDesc) {
+        const pm = payload.payment_method || waSelectedPayment;
+        if (pm === 'cod') {
+          scDesc.innerText = 'Your COD order has been successfully placed. You will receive a confirmation on WhatsApp shortly.';
+        } else {
+          scDesc.innerText = 'Your prepaid order has been successfully placed. You will receive a confirmation on WhatsApp shortly.';
+        }
+      }
+
       const sc = document.getElementById('wa-success-screen');
       if (sc) sc.style.display = 'flex';
       clearTimeout(timeoutId);
@@ -3251,7 +3393,7 @@ function renderPaymentMethods() {
       }
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = '<span id="wa-pay-btn-text">Pay Now</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        btn.innerHTML = originalBtnHTML;
       }
     }
   }
@@ -3270,7 +3412,12 @@ function renderPaymentMethods() {
     if (e.target.closest && e.target.closest('#wa-otp-overlay')) return;
     const action = (e.target.action || '').toLowerCase();
     if (action.includes('cashfree') || action.includes('razorpay') || action.includes('paytm')) return;
+    if (action.includes('/cart/add')) return;
     const isShopifyCheckout = (action.includes('/cart') || action.includes('/checkout')) && !action.includes('cashfree');
+    // Cart forms should only be intercepted if submitted by checkout button
+    if (action.endsWith('/cart') || action.endsWith('/cart/')) {
+      if (e.submitter && e.submitter.name !== 'checkout') return;
+    }
     if (isShopifyCheckout || e.target.querySelector('button[name="checkout"], input[name="checkout"]')) {
       e.preventDefault();
       e.stopPropagation();
@@ -3281,6 +3428,10 @@ function renderPaymentMethods() {
   HTMLFormElement.prototype.submit = function() {
     const action = (this.action || '').toLowerCase();
     if (action.includes('cashfree') || action.includes('razorpay') || action.includes('paytm')) {
+      _origSubmit.apply(this, arguments);
+      return;
+    }
+    if (action.includes('/cart/add')) {
       _origSubmit.apply(this, arguments);
       return;
     }
@@ -3295,13 +3446,13 @@ function renderPaymentMethods() {
       if (!e.target || !e.target.closest) return;
       // CRITICAL: Never intercept clicks inside the modal itself
       if (e.target.closest('#wa-otp-overlay')) return;
-      let target = e.target.closest('button[name="checkout"], a[href*="/checkout"], input[name="checkout"], #checkout, .cart__checkout-button, .checkout-btn, .cart-drawer__checkout, .cart__submit, [data-checkout], form[action*="/cart"] [type="submit"], form[action*="/checkout"] [type="submit"]');
+      let target = e.target.closest('button[name="checkout"], a[href*="/checkout"], input[name="checkout"], #checkout, .cart__checkout-button, .checkout-btn, .cart-drawer__checkout, .cart__submit[name="checkout"], [data-checkout], form[action*="/checkout"] [type="submit"]');
       if (!target) {
         const btnEl = e.target.closest('button, a, input[type="submit"]');
         if (btnEl) {
           const txt = (btnEl.innerText || btnEl.value || '').toLowerCase();
           const href = (btnEl.getAttribute('href') || '').toLowerCase();
-          if (txt.includes('checkout') || txt.includes('check out') || href.includes('/checkout')) {
+          if (btnEl.name === 'checkout' || href.includes('/checkout')) {
             target = btnEl;
           }
         }
@@ -3330,5 +3481,29 @@ function renderPaymentMethods() {
       btn.innerHTML = '<span id="wa-pay-btn-text">Pay Now</span>';
       if (window.waProcessingInterval) clearInterval(window.waProcessingInterval);
     }
+  });
+
+  function waUpdateHeaderGreeting(name) {
+    try {
+      if (name) {
+        localStorage.setItem('fit11_first_name', name);
+      } else {
+        name = localStorage.getItem('fit11_first_name');
+      }
+      const phone = localStorage.getItem('fit11_verified_phone') || sessionStorage.getItem('fit11_verified_phone') || document.cookie.includes('wa_saved_phone=');
+      if (phone) {
+        var menuBtn = document.getElementById('tx-menu-login-btn');
+        if (menuBtn) menuBtn.innerText = 'My Account';
+        
+        var greeting = document.getElementById('tx-drawer-greeting');
+        if (greeting && name && name.trim() !== '' && name !== 'null') {
+          greeting.innerText = 'Hey ' + name + '!';
+        }
+      }
+    } catch(e) {}
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    waUpdateHeaderGreeting();
   });
 </script>
