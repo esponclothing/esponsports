@@ -1015,7 +1015,7 @@ window._shopifyCustomer = {
 </div>
 
 <script>
-  const WA_API_BASE = 'https://checkout-app-production-7acb.up.railway.app/api';
+  const WA_API_BASE = 'https://shopify-price-editor-production.up.railway.app/api';
   const MERCHANT_KEY = 'sk_live_esponsports_h47rwi3ny0j';
 
   let waPhone = null;
@@ -1539,6 +1539,12 @@ window._shopifyCustomer = {
           if (data.email) {
             const em = document.getElementById('wa-email');
             if (em) em.value = data.email;
+            if (typeof waSaveEmailGlobally === 'function') {
+              waSaveEmailGlobally(data.email);
+            } else {
+              waEmail = data.email;
+              localStorage.setItem('espon_user_email', data.email);
+            }
           }
         }
       } catch(e) { console.error('Identify error:', e); }
