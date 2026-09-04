@@ -1179,6 +1179,8 @@ window._shopifyCustomer = {
   }
   
   function waSavePhoneGlobally(phone) {
+    // NOTE: Does NOT write wa_saved_phone cookie or 'verified' keys.
+    // Those are ONLY written by verify-otp success to prevent OTP bypass.
     if (!phone) return;
     let digits = String(phone).replace(/\D/g, '');
     if (digits.length > 10 && (digits.startsWith('91') || digits.startsWith('0'))) {
@@ -1187,14 +1189,8 @@ window._shopifyCustomer = {
     digits = digits.slice(0, 10);
     if (digits.length === 10) {
       try {
-        localStorage.setItem('wa_saved_phone', digits);
         localStorage.setItem('wa_user_phone', digits);
-        localStorage.setItem('espon_user_phone', digits);
         localStorage.setItem('fit11_user_phone', digits);
-        localStorage.setItem('notify_phone_number', digits);
-        localStorage.setItem('wa_verified_phone', digits);
-        localStorage.setItem('fit11_verified_phone', digits);
-        document.cookie = `wa_saved_phone=${digits}; path=/; max-age=2592000`; // 30 days
       } catch(e) {}
     }
   }
@@ -1338,9 +1334,6 @@ window._shopifyCustomer = {
     }
     digits = digits.slice(0, 10);
     el.value = digits;
-    if (digits.length === 10) {
-      waSavePhoneGlobally(digits);
-    }
     return digits;
   }
 
@@ -1394,7 +1387,6 @@ window._shopifyCustomer = {
     // Immediately jump to Step 3 if user is already logged in / cached
     if (cachedPhone) {
       waPhone = cachedPhone;
-      waSavePhoneGlobally(cachedPhone);
       document.getElementById('wa-step-1').style.display = 'none';
       document.getElementById('wa-step-2').style.display = 'none';
       document.getElementById('wa-step-3').style.display = 'block';
